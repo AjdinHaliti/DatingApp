@@ -5,14 +5,14 @@ import * as alertify from 'alertifyjs';
   providedIn: 'root'
 })
 export class AlertifyService {
+  constructor() {}
 
-constructor() { }
-
-  confirm(message: string, okCallback: () => any){
+  confirm(message: string, okCallback: () => any) {
     alertify.confirm(message, (e: any) => {
       if (e) {
         okCallback();
-      } else{}
+      } else {
+      }
     });
   }
 
@@ -31,5 +31,4 @@ constructor() { }
   message(message: string) {
     alertify.message(message);
   }
-
 }
