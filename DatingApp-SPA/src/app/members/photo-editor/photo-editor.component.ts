@@ -67,6 +67,7 @@ export class PhotoEditorComponent implements OnInit {
         };
         // push this photo into photo array
         this.photos.push(photo);
+        // if it is the only photo uploaded then set it to main
         if (photo.isMain) {
           this.authService.changeMemberPhoto(photo.url);
           this.authService.currentUser.photoUrl = photo.url;
