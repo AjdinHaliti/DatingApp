@@ -21,7 +21,7 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { MemberListComponent } from './members/member-list/member-list.component';
-import { ListstComponent } from './listst/listst.component';
+import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { appRoutes } from './routes';
 import { MembersCardComponent } from './members/members-card/members-card.component';
@@ -35,6 +35,9 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { MemberEditResolver } from './_resolvers/member-edit.resolvers';
 import { UnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
+import { ListsResolver } from './_resolvers/lists.resolver';
+import { MessagesResolver } from './_resolvers/messages.resolver';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 
 
 
@@ -49,12 +52,13 @@ export function tokenGetter(){
       RegisterComponent,
       HomeComponent,
       MemberListComponent,
-      ListstComponent,
+      ListsComponent,
       MessagesComponent,
       MembersCardComponent,
       MemberDetailComponent,
       MemberEditComponent,
       PhotoEditorComponent,
+      MemberMessagesComponent
    ],
    imports: [
       BrowserModule,
@@ -89,7 +93,9 @@ export function tokenGetter(){
       MemberDetailResolver,
       MemberListlResolver,
       MemberEditResolver,
-      UnsavedChangesGuard
+      UnsavedChangesGuard,
+      ListsResolver,
+      MessagesResolver
    ],
    bootstrap: [
       AppComponent

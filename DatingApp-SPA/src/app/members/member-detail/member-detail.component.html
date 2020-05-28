@@ -11,11 +11,11 @@
             </div>
             <div>
               <strong>Age:</strong>
-              <p>{{user.lastActive | timeago}}</p>
+              <p>{{user.age}}</p>
             </div>
             <div>
               <strong>Last Active:</strong>
-              <p>{{user.age}}</p>
+              <p>{{user.lastActive | timeago}}</p>
             </div>
             <div>
               <strong>Member since:</strong>
@@ -25,14 +25,13 @@
           <div class="card-footer">
             <div class="btn-group d-flex">
               <button class="btn btn-primary width-100">Like</button>
-              <button class="btn btn-success width-100">Message</button>
-            </div>
+              <button class="btn btn-success w-100" (click)="selectTab(3)">Message</button>            </div>
           </div>
         </div>
       </div>
       <div class="col-sm-8">
         <div class="tab-panel">
-          <tabset class="member-tabset">
+          <tabset class="member-tabset" #memberTabs>
            <tab heading="About {{user.knownAs}}">
              <h4>Description</h4>
              <p>{{user.introduction}}</p>
@@ -47,7 +46,7 @@
             <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
            </tab>
            <tab heading="Messages">
-             <h4>Messages will go here</h4>
+             <app-member-messages [recipientId]="user.id"></app-member-messages>
            </tab>
           </tabset>
         </div>

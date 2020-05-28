@@ -1,3 +1,75 @@
-<p>
-  messages works!
-</p>
+<!-- // containar with margin top of 5-->
+<div class="container mt-5">
+  <div class="row">
+    <!-- 3 buttons that are going to control the selection of wich message container we are gonna display
+     the buttons are bound via the (ngModuel) to the messageContainer property, and when this is updated this is going to change the value
+    (btnRadio) and then by click loadMessages() is going to be passed-->
+    <div class="btn-group">
+      <button class="btn btn-primary" [(ngModel)]="messageContainer" btnRadio="Unread" (click)="loadMessages()">
+        <i class="fa fa-envelope"></i> Unread
+      </button>
+      <button class="btn btn-primary" [(ngModel)]="messageContainer" btnRadio="Inbox" (click)="loadMessages()">
+        <i class="fa fa-envelope-open"></i> Inbox
+      </button>
+      <button class="btn btn-primary" [(ngModel)]="messageContainer" btnRadio="Outbox" (click)="loadMessages()">
+        <i class="fa fa-paper-plane"></i> Outbox
+      </button>
+    </div>
+  </div>
+  <!-- if there is no messages in container display No Messages -->
+  <div class="row" *ngIf="messages.length == 0">
+    <h3>No messages</h3>
+  </div>
+  <!-- if there are messages show html table with table headers...  -->
+  <div class="row" *ngIf="messages.length > 0">
+    <table class="table table-hover" style="cursor: pointer">
+      <tr>
+        <th style="width: 40%">Message</th>
+        <th style="width: 20%">From / To</th>
+        <th style="width: 20%">Sent / Received</th>
+        <th style="width: 20%"></th>
+      </tr>
+      <!-- each table row is clickable and each one has a link wich is taking user to a member detaild page -->
+      <!-- if it is outbox go to recipientId if it is outbox go to senderId -->
+      <!-- query params are acting like route go to tab with an id 3.. -->
+      <tr *ngFor="let message of messages" [routerLink]="['/members',
+        messageContainer == 'Outbox' ? message.recipientId : message.senderId]"
+          [queryParams]="{tab: 3}">
+          <!-- displaying the message content -->
+        <td>{{message.content}}</td>
+        <td>
+          <!-- in order to show who the message is from or to  we are cecking if the mseeagecontainer is not qeual to outbox
+          then show the senders photoUrl and the senderKnownAs name-->
+          <div *ngIf="messageContainer != 'Outbox'">
+                <img src={{message?.senderPhotoUrl}} class="img-circle rounded-circle mr-1">
+                <strong>{{message.senderKnownAs}}</strong>
+          </div>
+          <!-- if it is equal to the outbox then show who the message is sent to..  -->
+          <div *ngIf="messageContainer == 'Outbox'">
+                <img src={{message?.recipientPhotoUrl}} class="img-circle rounded-circle mr-1">
+                <strong>{{message.recipientKnownAs}}</strong>
+          </div>
+        </td>
+        <!-- the date the message was sent and -->
+        <td>{{message.messageSent | timeago}}</td>
+        <td>
+          <!-- delete butoon wich is used to delete the message -->
+          <button class="btn btn-danger" (click)="$event.stopPropagation()" (click)="deleteMessage(message.id)">Delete</button>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+
+</div>
+
+<div class="d-flex justify-content-center">
+  <!-- paggination info -->
+    <pagination [boundaryLinks]="true"
+                [totalItems]="pagination.totalItems"
+                [itemsPerPage]="pagination.itemsPerPage"
+                [(ngModel)]="pagination.currentPage"
+                (pageChanged)="pageChanged($event)"
+              previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+  </pagination>
+  </div>
